@@ -30,7 +30,7 @@ func main() {
 		http.StripPrefix("/static/",
 			http.FileServer(http.Dir("static"))))
 
-	mux.HandleFunc("/", handler.ServeFile)
+	mux.Handle("/", middleware.MiddlewareLogging(http.HandlerFunc(handler.ServeFile)))
 
 
 	mux.Handle("/create_dir", middleware.MiddlewareLogging(http.HandlerFunc(handler.CreateDirectoryHandler)))
