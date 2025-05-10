@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>FileTP</title>
+	<link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+	<form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+		<input type="file" name="fileKey">
+		<input type="submit" value="Upload">
+	</form>
+
+	{{if .Files}}
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Size</th>
+				<th>Owner</th>
+				<th>Create Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{range .Files}}
+			{{if .IsDeleted}}
+			{{else}}
+			<tr>
+				<td><a href="{{.LinkTarget}}">{{formatPath .Path .Type}}</a></td>
+				<td class="file-size">{{.Size | formatSize}}</td>
+				<td>{{.User}}</td>
+				<td>{{.CreatedAt.Format "02 Jan 2006 15:04"}}</td>
+			</tr>
+			{{end}}
+			{{end}}
+		</tbody>
+	</table>
+	{{else}}
+	<div class="empty-message">Files not found</div>
+	{{end}}
+
+	<script>
+		document.getElementById('uploadForm').addEventListener('submit', function () {
+			const currentPath = encodeURIComponent(window.location.pathname);
+			this.action = `/upload?path=${currentPath}`;
+		});
+	</script>
+</body>
+
+</html>
