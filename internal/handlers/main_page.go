@@ -42,7 +42,6 @@ func (h *FTPHandler) ServeFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if fileInfo.IsDir() {
-		// Нормализация текущего пути
 		currPath := requestedPath
 		if currPath != "/" {
 			currPath = strings.TrimSuffix(currPath, "/")
@@ -56,21 +55,32 @@ func (h *FTPHandler) ServeFile(w http.ResponseWriter, r *http.Request) {
 		}
 
 		var filteredFiles []models.File
+		currentPath := strings.Trim(currPath, "/")
+		currentComponents := strings.Split(currentPath, "/")
+
 		for _, f := range files {
-			// Проверка, находится ли файл в текущей директории
-			if currPath == "/" {
-				// Для корневой директории: путь должен быть вида "/file"
-				if strings.Count(f.Path, "/") == 1 {
-					filteredFiles = append(filteredFiles, f)
+			filePath := strings.Trim(f.Path, "/")
+			fileComponents := strings.Split(filePath, "/")
+
+			// Проверяем, что текущий путь является префиксом пути файла
+			if len(fileComponents) < len(currentComponents) {
+				continue
+			}
+
+			match := true
+			for i := 0; i < len(currentComponents); i++ {
+				if currentComponents[i] != fileComponents[i] {
+					match = false
+					break
 				}
-			} else {
-				prefix := currPath + "/"
-				if strings.HasPrefix(f.Path, prefix) {
-					suffix := strings.TrimPrefix(f.Path, prefix)
-					if !strings.Contains(suffix, "/") {
-						filteredFiles = append(filteredFiles, f)
-					}
-				}
+			}
+
+			// Проверяем уровень вложенности
+			if match && len(fileComponents) == len(currentComponents)+1 {
+				filteredFiles = append(filteredFiles, f)
+			} else if currentPath == "" && len(fileComponents) == 1 {
+				// Корневая директория
+				filteredFiles = append(filteredFiles, f)
 			}
 		}
 
@@ -81,7 +91,6 @@ func (h *FTPHandler) ServeFile(w http.ResponseWriter, r *http.Request) {
 
 		h.renderFiles(w, data)
 	} else {
-		// Отдача файла, если это не директория
 		http.ServeFile(w, r, fullPath)
 	}
 }

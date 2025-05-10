@@ -66,17 +66,16 @@ func (h *FTPHandler) CreateDirectoryHandler(w http.ResponseWriter, r *http.Reque
 	}
 
 	userIP := utils.GetUserIP(r)
-
-	// Создаем запись о директории
+	dir_path := filepath.ToSlash(filepath.Join(path, dirName)) + "/"
 	dirObj := models.File{
-		Path:        filepath.ToSlash(filepath.Join(path, dirName)),
+		Path:        dir_path,
 		User:        userIP,
 		Permissions: "rw",
 		Size:        0,
 		CreatedAt:   time.Now(),
 		ModifiedAt:  time.Now(),
 		Type:        "directory",
-		LinkTarget:  filepath.ToSlash(filepath.Join("/", path, dirName)) + "/",
+		LinkTarget:  dir_path,
 		Hash:        "",
 		UploaderIP:  userIP,
 		IsDeleted:   false,
