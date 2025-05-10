@@ -27,7 +27,7 @@ func GetUserIP(r *http.Request) string {
 
 	// Если заголовков нет, используем RemoteAddr
 	ip, _, err := net.SplitHostPort(r.RemoteAddr)
-	if strings.TrimSpace(ip) == "::1" {
+	if ip == "::1" {
 		return "localhost"
 	}
 
@@ -54,17 +54,4 @@ func FormatFileSize(size int64) string {
 
 	value := float64(size) / math.Pow(base, float64(order))
 	return fmt.Sprintf("%.1f %s", value, sizes[order])
-}
-
-func FormatFilePath(name string, fileType string) string {
-	switch fileType {
-	case "file":
-		return strings.TrimPrefix(name, "/")
-
-	case "dir":
-		if !strings.HasSuffix(name, "/") {
-			return name + "/"
-		}
-	}
-	return name
 }

@@ -30,9 +30,11 @@ func main() {
 		http.StripPrefix("/static/",
 			http.FileServer(http.Dir("static"))))
 
-	mux.Handle("/", middleware.MiddlewareLogging(http.HandlerFunc(handler.MainPage)))
+	mux.HandleFunc("/", handler.ServeFile)
+
+
+	mux.Handle("/create_dir", middleware.MiddlewareLogging(http.HandlerFunc(handler.CreateDirectoryHandler)))
 	mux.Handle("/upload", middleware.MiddlewareLogging(http.HandlerFunc(handler.CreateFileHandler)))
-	mux.Handle("/open", middleware.MiddlewareLogging(http.HandlerFunc(handler.OpenFileHandler)))
 
 	log.Info("Server started -> http://localhost:1212")
 	err = http.ListenAndServe(":1212", mux)

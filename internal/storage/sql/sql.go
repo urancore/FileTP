@@ -122,6 +122,47 @@ func (fdb *FileDB) Get(path string) (*models.File, error) {
 	return &file, nil
 }
 
+func (fdb *FileDB) GetByPath(dirPath string) ([]models.File, error) {
+	query := `SELECT * FROM files WHERE (path = ? OR path LIKE ? || '/%') AND is_deleted = 0`
+	rows, err := fdb.db.Query(query, dirPath, dirPath)
+	if err != nil {
+		return nil, fmt.Errorf("query error: %v", err)
+	}
+	defer rows.Close()
+
+	var files []models.File
+
+	for rows.Next() {
+		var file models.File
+		var isDeleted int
+		var createdAt, modifiedAt string
+
+		err := rows.Scan(
+			&file.Path,
+			&file.User,
+			&file.Permissions,
+			&file.Size,
+			&createdAt,
+			&modifiedAt,
+			&file.Type,
+			&file.LinkTarget,
+			&file.Hash,
+			&file.UploaderIP,
+			&isDeleted,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("scan error: %v", err)
+		}
+
+		file.CreatedAt, _ = time.Parse(time.RFC3339, createdAt)
+		file.ModifiedAt, _ = time.Parse(time.RFC3339, modifiedAt)
+		file.IsDeleted = isDeleted == 1
+
+		files = append(files, file)
+	}
+	return files, nil
+}
+
 func (fdb *FileDB) GetAll() ([]models.File, error) {
 	query := `SELECT
         path,
