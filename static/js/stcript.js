@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+	// Обработчик для формы загрузки файлов
 	document.getElementById('uploadForm').addEventListener('submit', function (e) {
 		e.preventDefault();
 		const currentPath = encodeURIComponent(window.location.pathname);
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	document.getElementById('createDir').addEventListener('submit', function (e) {
 		e.preventDefault();
-		const currentPath = encodeURIComponent(window.location);
+		const currentPath = encodeURIComponent(window.location.pathname);
 		this.action = `/create_dir?path=${currentPath}`;
 		this.submit();
 	});

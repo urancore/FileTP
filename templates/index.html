@@ -11,11 +11,15 @@
 
 <body>
 	<div class="container">
+		<div class="header-container">
+			<span id="current-url"></span>
+		</div>
+
 		<div class="actions-container">
 			<div class="form-card">
 				<form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
-						<input type="file" name="fileKey" class="file-input">
+						<input type="file" name="fileKey" class="file-input" required>
 						<input type="submit" value="Upload">
 					</div>
 				</form>
@@ -24,7 +28,8 @@
 			<div class="form-card">
 				<form id="createDir" action="/create_dir" method="POST">
 					<div class="form-group">
-						<input type="text" name="dirname" required placeholder="Directory name">
+						<input type="text" name="dirname" required
+							placeholder="New directory name">
 						<button type="submit">Create</button>
 					</div>
 				</form>
@@ -38,7 +43,7 @@
 					<th>Name</th>
 					<th>Size</th>
 					<th>Owner</th>
-					<th>Create Date</th>
+					<th>Date</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -46,24 +51,21 @@
 				<tr>
 					<td data-label="Name">
 						<a href="{{.LinkTarget}}">
-							{{.Path | baseName}}{{if eq .Type "directory"}}/{{end}}
+							{{if eq .Type "directory"}}{{.Path | baseName}}/{{else}}{{.Path | baseName}}{{end}}
 						</a>
 					</td>
 					<td class="file-size" data-label="Size">{{if eq .Type
-						"directory"}}-{{else}}{{.Size |
-						formatSize}}{{end}}</td>
+						"directory"}}-{{else}}{{.Size | formatSize}}{{end}}</td>
 					<td data-label="Owner">{{.User}}</td>
-					<td data-label="Create Date">{{.CreatedAt.Format "02 Jan 2006 15:04"}}</td>
+					<td data-label="Date">{{.CreatedAt.Format "02 Jan 2006"}}</td>
 				</tr>
 				{{end}}
 			</tbody>
 		</table>
 		{{else}}
-		<div class="empty-message">No files found in this directory</div>
+		<div class="empty-message">No files in this directory</div>
 		{{end}}
 	</div>
-
-	<script src="/static/js/stcript.js"></script>
 </body>
 
 </html>
