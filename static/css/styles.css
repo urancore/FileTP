@@ -65,6 +65,7 @@ body {
 	border-radius: 4px;
 }
 
+
 input[type="text"] {
 	flex: 1;
 	background: var(--surface);
@@ -132,6 +133,34 @@ input[type="submit"]:hover {
 	height: 20px;
 	background-size: contain;
 	background-repeat: no-repeat;
+}
+
+.file-table a {
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.file-table a:link {
+	color: var(--primary);
+	/* Непосещённые - голубой */
+}
+
+.file-table a:visited {
+	color: #6146ff;
+	/* Посещённые - серый */
+}
+
+.file-table a:hover {
+	color: #4dabf7;
+	/* При наведении - светлый голубой */
+	text-decoration: underline;
+}
+
+.file-table a:active {
+	color: #0056b3;
+	/* При клике - тёмно-синий */
 }
 
 .file-table tr:not(:has(a[href$="/"])) a:before {

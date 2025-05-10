@@ -39,7 +39,7 @@ func GetUserIP(r *http.Request) string {
 
 func FormatFileSize(size int64) string {
 	if size == 0 {
-		return "0 B"
+		return "0B"
 	}
 
 	sizes := []string{"B", "K", "M", "G", "T", "P", "E"}
