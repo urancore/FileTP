@@ -42,7 +42,7 @@ func FormatFileSize(size int64) string {
 		return "0 B"
 	}
 
-	sizes := []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
+	sizes := []string{"B", "K", "M", "G", "T", "P", "E"}
 	base := 1000.0
 
 	order := int(math.Log(float64(size)) / math.Log(base))
@@ -53,5 +53,5 @@ func FormatFileSize(size int64) string {
 	}
 
 	value := float64(size) / math.Pow(base, float64(order))
-	return fmt.Sprintf("%.1f %s", value, sizes[order])
+	return fmt.Sprintf("%.1f%s", value, sizes[order])
 }

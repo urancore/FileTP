@@ -57,7 +57,7 @@
 					<td class="file-size" data-label="Size">{{if eq .Type
 						"directory"}}-{{else}}{{.Size | formatSize}}{{end}}</td>
 					<td data-label="Owner">{{.User}}</td>
-					<td data-label="Date">{{.CreatedAt.Format "02 Jan 2006"}}</td>
+					<td data-label="Date">{{.CreatedAt.Format "2006-01-02 15:04"}}</td>
 				</tr>
 				{{end}}
 			</tbody>
