@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-	// Обработчик для формы загрузки файлов
+	// Обработчики для upload и createDir
 	document.getElementById('uploadForm').addEventListener('submit', function (e) {
 		e.preventDefault();
 		const currentPath = encodeURIComponent(window.location.pathname);

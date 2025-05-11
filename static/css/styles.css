@@ -1,7 +1,7 @@
 :root {
-	--background: #202124;
-	--surface: #2d2d2d;
-	--primary: #0078d4;
+	--background: #2B2B2B;
+	--surface: #252525;
+	--primary: #81B6DE;
 	--text-primary: #ffffff;
 	--text-secondary: #9e9e9e;
 	--border-color: #3d3d3d;
@@ -9,11 +9,12 @@
 }
 
 body {
-	font-family: 'Inter', sans-serif;
+	font-family: "segoe ui", "trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", sans-serif;
 	margin: 0;
-	padding: 20px;
+	padding: 3px;
 	background-color: var(--background);
 	color: var(--text-primary);
+	font-size: 12px;
 }
 
 .container {
@@ -22,65 +23,55 @@ body {
 	background-color: var(--surface);
 	border-radius: 8px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-	padding: 20px;
+	padding: 3px;
 }
 
 .header-container {
-	padding: 15px;
+	padding: 3px;
 	background-color: var(--background);
 	border-radius: 4px;
-	margin-bottom: 20px;
+	margin-bottom: 3px;
 }
 
 #current-url {
-	font-size: 14px;
 	color: var(--text-secondary);
 }
 
 .actions-container {
 	display: flex;
-	gap: 15px;
-	margin-bottom: 25px;
+	gap: 3px;
+	margin-bottom: 3px;
 }
 
 .form-card {
 	flex: 1;
 	background-color: var(--background);
-	padding: 15px;
+	padding: 3px;
 	border-radius: 4px;
 	border: 1px solid var(--border-color);
 }
 
 .form-group {
 	display: flex;
-	gap: 10px;
+	gap: 3px;
 }
 
-.file-input {
-	flex: 1;
-	background: var(--surface);
-	border: 1px solid var(--border-color);
-	color: var(--text-primary);
-	padding: 8px;
-	border-radius: 4px;
-}
-
-
+.file-input,
 input[type="text"] {
 	flex: 1;
 	background: var(--surface);
 	border: 1px solid var(--border-color);
 	color: var(--text-primary);
-	padding: 8px;
+	padding: 3px;
 	border-radius: 4px;
 }
 
 button,
 input[type="submit"] {
 	background-color: var(--primary);
-	color: white;
+	color: #000;
 	border: none;
-	padding: 8px 15px;
+	padding: 6px 6px;
 	border-radius: 4px;
 	cursor: pointer;
 	transition: background 0.2s;
@@ -88,7 +79,7 @@ input[type="submit"] {
 
 button:hover,
 input[type="submit"]:hover {
-	background-color: #006cbd;
+	background-color: #5a8fb4;
 }
 
 .file-table {
@@ -104,14 +95,12 @@ input[type="submit"]:hover {
 	color: var(--text-secondary);
 	font-weight: 500;
 	text-align: left;
-	padding: 12px 15px;
-	font-size: 14px;
+	padding: 3px;
 }
 
 .file-table td {
-	padding: 12px 15px;
+	padding: 3px;
 	border-bottom: 1px solid var(--border-color);
-	font-size: 14px;
 }
 
 .file-table tr:hover {
@@ -119,69 +108,25 @@ input[type="submit"]:hover {
 }
 
 .file-table a {
-	color: var(--text-primary);
-	text-decoration: none;
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.file-table a:before {
-	content: '';
-	display: inline-block;
-	width: 20px;
-	height: 20px;
-	background-size: contain;
-	background-repeat: no-repeat;
-}
-
-.file-table a {
-	text-decoration: none;
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.file-table a:link {
 	color: var(--primary);
-	/* Непосещённые - голубой */
-}
-
-.file-table a:visited {
-	color: #6146ff;
-	/* Посещённые - серый */
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	gap: 3px;
 }
 
 .file-table a:hover {
-	color: #4dabf7;
-	/* При наведении - светлый голубой */
 	text-decoration: underline;
-}
-
-.file-table a:active {
-	color: #0056b3;
-	/* При клике - тёмно-синий */
-}
-
-.file-table tr:not(:has(a[href$="/"])) a:before {
-	background-image: url('data:image/svg+xml;utf8,<svg ...></svg>');
-	/* Иконка файла */
-}
-
-.file-table tr:has(a[href$="/"]) a:before {
-	background-image: url('data:image/svg+xml;utf8,<svg ...></svg>');
-	/* Иконка папки */
 }
 
 .file-size {
 	font-family: monospace;
-	color: var(--text-secondary);
 }
 
 .empty-message {
 	text-align: center;
 	color: var(--text-secondary);
-	padding: 40px 0;
+	padding: 3px 0;
 }
 
 @media (max-width: 768px) {
@@ -196,6 +141,7 @@ input[type="submit"]:hover {
 	.file-table td {
 		display: block;
 		text-align: right;
+		padding: 3px;
 	}
 
 	.file-table td::before {

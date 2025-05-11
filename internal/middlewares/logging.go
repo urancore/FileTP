@@ -6,14 +6,17 @@ import (
 	"time"
 
 	"FileTP/internal/pkg/logging"
+	"FileTP/internal/storage/sql"
 )
 
 type FTPMiddleware struct {
 	Log *logging.Logger
+	DB *sql.FileDB
 }
-func NewMiddleware(log *logging.Logger) *FTPMiddleware {
+func NewMiddleware(log *logging.Logger, db *sql.FileDB) *FTPMiddleware {
 	return &FTPMiddleware{
 		Log: log,
+		DB: db,
 	}
 }
 

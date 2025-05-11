@@ -44,6 +44,7 @@
 					<th>Size</th>
 					<th>Owner</th>
 					<th>Date</th>
+					<th>Permissions</th> <!-- Новый столбец -->
 				</tr>
 			</thead>
 			<tbody>
@@ -51,13 +52,27 @@
 				<tr>
 					<td data-label="Name">
 						<a href="{{.LinkTarget}}">
-							{{if eq .Type "directory"}}{{.Path | baseName}}/{{else}}{{.Path | baseName}}{{end}}
+							{{if eq .Type "directory"}}{{.Path | baseName}}/{{else}}{{.Path
+							| baseName}}{{end}}
 						</a>
 					</td>
 					<td class="file-size" data-label="Size">{{if eq .Type
 						"directory"}}-{{else}}{{.Size | formatSize}}{{end}}</td>
 					<td data-label="Owner">{{.User}}</td>
 					<td data-label="Date">{{.CreatedAt.Format "2006-01-02 15:04"}}</td>
+					<td data-label="Permissions">
+						<form class="change-perm-form" action="/change_perm" method="POST">
+							<input type="hidden" name="path" value="{{.Path}}">
+							<select name="perm">
+								<option value="r" {{if eq .Permissions "r" }}selected{{end}}>Read</option>
+								<option value="w" {{if eq .Permissions "w"
+									}}selected{{end}}>Write</option>
+								<option value="rw" {{if eq .Permissions "rw"
+									}}selected{{end}}>Read/Write</option>
+							</select>
+							<button type="submit">✓</button>
+						</form>
+					</td>
 				</tr>
 				{{end}}
 			</tbody>

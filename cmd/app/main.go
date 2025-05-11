@@ -13,7 +13,6 @@ import (
 
 func main() {
 	log := logging.NewLogger(true)
-	middleware := middlewares.NewMiddleware(log)
 
 	cfg := config.NewConfig(filepath.Clean("./root/"))
 
@@ -22,7 +21,7 @@ func main() {
 		log.Error(err.Error())
 	}
 	defer db.Close()
-
+	middleware := middlewares.NewMiddleware(log, db)
 	handler := handlers.NewHandler(log, db, cfg)
 	mux := http.NewServeMux()
 
@@ -32,7 +31,7 @@ func main() {
 
 	mux.Handle("/", middleware.MiddlewareLogging(http.HandlerFunc(handler.ServeFile)))
 
-
+	mux.Handle("/change_perm", middleware.MiddlewareLogging(http.HandlerFunc(handler.ChangePermissionsHandler)))
 	mux.Handle("/create_dir", middleware.MiddlewareLogging(http.HandlerFunc(handler.CreateDirectoryHandler)))
 	mux.Handle("/upload", middleware.MiddlewareLogging(http.HandlerFunc(handler.CreateFileHandler)))
 

@@ -272,3 +272,9 @@ func (fdb *FileDB) SoftDelete(path string) error {
 	_, err := fdb.db.Exec(query, path)
 	return err
 }
+
+func (fdb *FileDB) ChangePermissions(permissions, path string) error {
+	query := `UPDATE files SET permissions = ? WHERE path = ?`
+	_, err := fdb.db.Exec(query, permissions, path)
+	return err
+}

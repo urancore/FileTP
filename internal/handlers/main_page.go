@@ -83,7 +83,6 @@ func (h *FTPHandler) ServeFile(w http.ResponseWriter, r *http.Request) {
 				filteredFiles = append(filteredFiles, f)
 			}
 		}
-
 		data := TemplateData{
 			Files:    filteredFiles,
 			CurrPath: currPath,

@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"FileTP/internal/models"
 	"fmt"
 	"math"
 	"net"
@@ -54,4 +55,21 @@ func FormatFileSize(size int64) string {
 
 	value := float64(size) / math.Pow(base, float64(order))
 	return fmt.Sprintf("%.1f%s", value, sizes[order])
+}
+
+
+func СheckPermission(file *models.File, userIP, requiredPerm string) bool {
+	// Владелец или localhost имеют полные права
+	if file.User == userIP || userIP == "localhost" {
+		return true
+	}
+
+	switch requiredPerm {
+	case "r":
+		return strings.Contains(file.Permissions, "r")
+	case "w":
+		return strings.Contains(file.Permissions, "w")
+	default:
+		return false
+	}
 }
